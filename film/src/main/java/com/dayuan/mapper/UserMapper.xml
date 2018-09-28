@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dayuan.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.dayuan.entity.User">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <id column="card_no" jdbcType="VARCHAR" property="cardNo" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="balance" jdbcType="VARCHAR" property="balance" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, card_no, password, name, sex, balance
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.dayuan.entity.UserKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=INTEGER}
+      and card_no = #{cardNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.dayuan.entity.UserKey">
+    delete from user
+    where id = #{id,jdbcType=INTEGER}
+      and card_no = #{cardNo,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.dayuan.entity.User">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user (card_no, password, name, 
+      sex, balance)
+    values (#{cardNo,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=VARCHAR}, #{balance,jdbcType=VARCHAR})
+  </insert>
+
+
+  <update id="updateByPrimaryKey" parameterType="com.dayuan.entity.User">
+    update user
+    set password = #{password,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      balance = #{balance,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+      and card_no = #{cardNo,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectByCardNo" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where card_no = #{cardNo}
+  </select>
+</mapper>
