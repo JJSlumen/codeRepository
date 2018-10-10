@@ -273,7 +273,14 @@
     <div class="am-u-md-4 am-u-sm-12 blog-sidebar">
         <div class="blog-sidebar-widget blog-bor">
             <h2 class="blog-text-center blog-title"><span>About ME</span></h2>
-            <img src="/htmlFiles/assets/i/f161.jpg" alt="about me" class="blog-entry-img">
+
+            <form id="avatarForm" action="/user/uploadAvatar" method="post" enctype="multipart/form-data" target="avatarIframe">
+                <div class="am-form-group am-form-file">
+                    <div class="tpl-user-panel-profile-picture">
+                        <img src="/htmlFiles/assets/i/f161.jpg" alt="about me" class="blog-entry-img" id="userAvatar">                    </div>
+                    <input id="doc-form-file" type="file" name="avatar" onchange="uploadAvatar()">
+                </div>
+            </form>
             <p>妹纸</p>
             <p>
                 我是妹子UI，中国首个开源 HTML5 跨屏前端框架
@@ -352,6 +359,17 @@
     <div class="blog-text-center">© 2015 AllMobilize, Inc. Licensed under MIT license. Made with love By LWXYFER</div>
 </footer>
 
+<script>
+    function uploadAvatar() {
+        $('#avatarForm').submit();
+    }
+
+    function showAvatar() {
+        $("#userAvatar").attr("src", "/show/avatar?" + new Date().getTime());
+    }
+</script>
+
+<iframe name="avatarIframe" src="" style="display: none"></iframe>
 <!--[if (gte IE 9)|!(IE)]><!-->
 <script src="/htmlFiles/assets/js/jquery.min.js"></script>
 <!--<![endif]-->
